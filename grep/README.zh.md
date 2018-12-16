@@ -1,18 +1,18 @@
-## grep的
+## grep
 
-ripgrep,作为一个图书馆.
+ripgrep,的一库.
 
 [![Linux build status](https://api.travis-ci.org/BurntSushi/ripgrep.svg)](https://travis-ci.org/BurntSushi/ripgrep)
 [![Windows build status](https://ci.appveyor.com/api/projects/status/github/BurntSushi/ripgrep?svg=true)](https://ci.appveyor.com/project/BurntSushi/ripgrep)
 [![](https://img.shields.io/crates/v/grep.svg)](https://crates.io/crates/grep)
 
-麻省理工学院或MIT下的双重许可[UNLICENSE](http://unlicense.org).
+MIT 或[UNLICENSE](http://unlicense.org)的双重许可.
 
 ### 文档
 
 <https://docs.rs/grep>
 
-注意:此箱子尚未准备好广泛使用.雄心勃勃的人可能会将这些部分拼凑在一起,但没有高级文档描述所有部分如何组合在一起.
+**注意**:此箱子尚未准备好广泛使用。雄心勃勃的人可能会将这些部分(自行了解的使用方式)拼凑在一起，但没有高级文档描述所有部分如何组合在一起。
 
 ### 用法
 
@@ -23,7 +23,7 @@ ripgrep,作为一个图书馆.
 grep = "0.2"
 ```
 
-这对你的箱子根:
+在你的箱根使用:
 
 ```rust
 extern crate grep;
@@ -31,4 +31,4 @@ extern crate grep;
 
 ### 特征
 
-这个箱子提供了一个`pcre2`功能(默认情况下禁用),启用后,重新导出`grep-pcre2`箱子作为替代品`Matcher`实施到标准`grep-regex`实现.
+这个箱子提供了一个`pcre2`功能(默认情况下禁用),启用后,重新导出`grep-pcre2`箱子，作为替代`Matcher`的实现，到标准`grep-regex`实现中。
