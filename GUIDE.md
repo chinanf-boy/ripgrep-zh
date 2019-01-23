@@ -20,7 +20,6 @@ translatable to any command line shell environment.
 * [File encoding](#file-encoding)
 * [Common options](#common-options)
 
-
 ### Basics
 
 ripgrep is a command line tool that searches your files for patterns that

@@ -29,7 +29,7 @@
 <!-- doc-templite END generated -->
 
 - [x] readme
-- [ ] [GUIDE.md](./GUIDE.zh.md)
+- [x] [GUIDE.md](./GUIDE.zh.md)
 - [ ] [FAQ.md](./FAQ.zh.md)
 - [x] [grep-regex/README.md](./grep-regex/README.zh.md)
 - [x] [globset/README.md](./globset/README.zh.md)
