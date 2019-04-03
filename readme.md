@@ -13,7 +13,7 @@
 
 ---
 
-## 校对 🀄️
+## 校对 ✅
 
 <!-- doc-templite START generated -->
 <!-- repo = 'BurntSushi/ripgrep' -->
@@ -30,7 +30,7 @@
 
 - [x] readme
 - [x] [GUIDE.md](./GUIDE.zh.md)
-- [ ] [FAQ.md](./FAQ.zh.md)
+- [x] [FAQ.md](./FAQ.zh.md)
 - [x] [grep-regex/README.md](./grep-regex/README.zh.md)
 - [x] [globset/README.md](./globset/README.zh.md)
 - [x] [ignore/README.md](./ignore/README.zh.md)
