@@ -134,7 +134,7 @@ ripgrep 有两个与颜色相关的标志:
 --colors '{type}:{attribute}:{value}'
 ```
 
-<!-- HERE -->
+
 
 - `{type}`应该是`path`，`line`，`column`要么`match`其中之一。这每一个都对应 ripgrep 在其输出中，添加颜色的四种不同类型的事物。选择要更改其颜色的类型。
 - `{attribute}`应该是`fg`，`bg`要么`style`其中之一，对应前景色，背景色或其他样式(例如是否粗体输出)。
@@ -252,7 +252,7 @@ $ RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/rc rg foo
 
 ### 为什么启用 PCRE2 正则式 时，ripgrep 会变慢？？
 
-<!-- HERE -->
+
 
 当你使用`--pcre2`(简写用`-P`)标志，ripgrep 将使用 PCRE2 正则表达式引擎而不是默认值。两个正则表达式引擎都非常快，但 PCRE2 提供了许多其他功能，例如许多人喜欢使用的环视和反向引用（look-around 和
 backreferences）。这主要是因为 PCRE2 使用回溯实现，其中默认正则表达式引擎使用基于有限自动机的实现。前者比后者，添加了大量铃声和口哨的能力，但后者在最坏情况，亦为线性时间复杂度执行。
@@ -270,7 +270,7 @@ $ rg '\n'
 the literal '"\n"' is not allowed in a regex
 ```
 
-<!-- HERE -->
+
 
 那么这与 PCRE2 有什么关系呢？ 是这样的，ripgrep 的默认正则表达式引擎公开的 API，以一种非常容易的方式对模式进行语法分析，可以从模式中剥离`\n`(或以其他方式检测，如果剥离是不可能的，就报告错误)。PCRE2 似乎没有提供类似的 API，所以当启用 PCRE2 时，ripgrep 不执行任何剥离。这迫使 ripgrep 使用"慢"的搜索策略，单独搜索每行。
 
@@ -436,7 +436,7 @@ sys     0m0.048s
 
 像这样的问题可以通过以下几种方式来解决:
 
-<!-- HERE -->
+
 
 - 如果您使用的是 OMZ Rails 插件，则通过编辑在 ZSH 配置中的`plugins`数组，禁用它。
 - 暂时绕过现有的`rg`别名，通过`command rg`,`\rg`或`'rg'`调用 ripgrep。
