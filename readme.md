@@ -13,12 +13,12 @@
 
 ---
 
-## 校对 ✅
+## 校对 中
 
 <!-- doc-templite START generated -->
 <!-- repo = 'BurntSushi/ripgrep' -->
-<!-- commit = '401add0a9964ff0b154171553ce6d80934461ca0' -->
-<!-- time = '2018-12-09' -->
+<!-- commit = '45d12abbc5f576d3b10ae13dc7410b14400a8d1e' -->
+<!-- time = '2019-04-14' -->
 
 | 翻译的原文 | 与日期        | 最新更新 | 更多                       |
 | ---------- | ------------- | -------- | -------------------------- |
@@ -30,19 +30,19 @@
 <!-- doc-templite END generated -->
 
 - [x] readme
-- [x] [GUIDE.md](./GUIDE.zh.md)
-- [x] [FAQ.md](./FAQ.zh.md)
-- [x] [grep-regex/README.md](./grep-regex/README.zh.md)
-- [x] [globset/README.md](./globset/README.zh.md)
-- [x] [ignore/README.md](./ignore/README.zh.md)
-- [x] [grep/README.md](./grep/README.zh.md)
-- [x] [termcolor/README.md](./termcolor/README.zh.md)
-- [x] [grep-cli/README.md](./grep-cli/README.zh.md)
-- [x] [grep-PCRE2/README.md](./grep-PCRE2/README.zh.md)
-- [x] [grep-searcher/README.md](./grep-searcher/README.zh.md)
-- [x] [wincolor/README.md](./wincolor/README.zh.md)
-- [x] [grep-printer/README.md](./grep-printer/README.zh.md)
-- [x] [grep-matcher/README.md](./grep-matcher/README.zh.md)
+- [ ] [指南](./GUIDE.zh.md)
+- [x] [FAQ](./FAQ.zh.md)
+- [x] [grep-regex](./grep-regex/README.zh.md)
+- [x] [globset](./globset/README.zh.md)
+- [x] [ignore](./ignore/README.zh.md)
+- [x] [grep](./grep/README.zh.md)
+- [x] [termcolor](./termcolor/README.zh.md)
+- [x] [grep-cli](./grep-cli/README.zh.md)
+- [x] [grep-PCRE2](./grep-PCRE2/README.zh.md)
+- [x] [grep-searcher](./grep-searcher/README.zh.md)
+- [x] [wincolor](./wincolor/README.zh.md)
+- [x] [grep-printer](./grep-printer/README.zh.md)
+- [x] [grep-matcher](./grep-matcher/README.zh.md)
 
 ### 贡献
 

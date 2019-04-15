@@ -78,7 +78,7 @@ shell 补全也包括所有[ripgrep binary releases](https://github.com/BurntSus
 
 默认情况下，ripgrep 使用并行性来执行搜索，这在大多数现代系统上搜索速度更快。反过来说，意味着 ripgrep 具有不确定性，因为在程序执行期间，线程的交叉本身是非确定性的。这具有以某种任意顺序的方式，打印出结果，并且该顺序，会在 ripgrep 的运行中改变。
 
-要使结果顺序一致的唯一方法，是让 ripgrep 对输出进行排序。就目前而言，会禁用所有并行。(在较小的存储库中，您可能没有注意到性能差异!)您可以使用`--sort-files`标志，顺序打印。
+要使结果顺序一致的唯一方法，是让 ripgrep 对输出进行排序。就目前而言，会禁用所有并行。(在较小的存储库中，您可能没有注意到性能差异!)您可以使用`--sort path`标志，顺序打印。
 
 这里有关于这个主题的更多讨论:<https://github.com/BurntSushi/ripgrep/issues/152>
 
@@ -88,13 +88,15 @@ shell 补全也包括所有[ripgrep binary releases](https://github.com/BurntSus
 
 ### 我要如何搜索压缩文件？
 
-ripgrep 的`-z/--search-zip`标志，会自动搜索压缩文件。目前而言,仅支持`gzip，bzip2，lzma，lz4 和 xz`，并且需要相应的，要在系统上安装的`gzip`，`bzip2`和`xz`二进制可执行文件。(也就是说，ripgrep 是通过终端的另一个进程，来进行解压缩，再进入里面寻找的。)
+ripgrep 的`-z/--search-zip`标志，会自动搜索压缩文件。目前而言,仅支持`gzip, bzip2, xz, lzma, lz4, Brotli 和
+Zstd`，并且需要系统，安装相应的`gzip`, `bzip2`, `xz`,
+`lz4`, `brotli` 和 `zstd`二进制可执行文件。(也就是说，ripgrep 是通过终端的另一个进程，来进行解压缩，再进入(压缩)里面寻找的。)
 
 ripgrep 目前不搜索的存档格式，`*.tar.gz`之类，会跳过。
 
 ### 我要如何搜索 多行内容？
 
-目前这不可行。ripgrep 基本上是一种面向单行的搜索工具。这样说吧,[多行的搜索为，已在计划的特性](https://github.com/BurntSushi/ripgrep/issues/176).
+`-U/--multiline` 标志，能让 ripgrep ，报告扫描多行的结果.
 
 ### 如何使用 lookaround 和/或 backreferences？
 

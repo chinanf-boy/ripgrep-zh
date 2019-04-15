@@ -118,7 +118,7 @@ from run to run of ripgrep.
 The only way to make the order of results consistent is to ask ripgrep to
 sort the output. Currently, this will disable all parallelism. (On smaller
 repositories, you might not notice much of a performance difference!) You
-can achieve this with the `--sort-files` flag.
+can achieve this with the `--sort path` flag.
 
 There is more discussion on this topic here:
 https://github.com/BurntSushi/ripgrep/issues/152
@@ -136,10 +136,10 @@ How do I search compressed files?
 </h3>
 
 ripgrep's `-z/--search-zip` flag will cause it to search compressed files
-automatically. Currently, this supports gzip, bzip2, lzma, lz4 and xz only and
-requires the corresponding `gzip`, `bzip2` and `xz` binaries to be installed on
-your system. (That is, ripgrep does decompression by shelling out to another
-process.)
+automatically. Currently, this supports gzip, bzip2, xz, lzma, lz4, Brotli and
+Zstd. Each of these requires requires the corresponding `gzip`, `bzip2`, `xz`,
+`lz4`, `brotli` and `zstd` binaries to be installed on your system. (That is,
+ripgrep does decompression by shelling out to another process.)
 
 ripgrep currently does not search archive formats, so `*.tar.gz` files, for
 example, are skipped.
@@ -149,9 +149,8 @@ example, are skipped.
 How do I search over multiple lines?
 </h3>
 
-This isn't currently possible. ripgrep is fundamentally a line-oriented search
-tool. With that said,
-[multiline search is a planned opt-in feature](https://github.com/BurntSushi/ripgrep/issues/176).
+The `-U/--multiline` flag enables ripgrep to report results that span over
+multiple lines.
 
 
 <h3 name="fancy">
