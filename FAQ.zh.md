@@ -88,8 +88,7 @@ shell 补全也包括所有[ripgrep binary releases](https://github.com/BurntSus
 
 ### 我要如何搜索压缩文件？
 
-ripgrep 的`-z/--search-zip`标志，会自动搜索压缩文件。目前而言,仅支持`gzip, bzip2, xz, lzma, lz4, Brotli 和
-Zstd`，并且需要系统，安装相应的`gzip`, `bzip2`, `xz`,
+ripgrep 的`-z/--search-zip`标志，会自动搜索压缩文件。目前而言,仅支持`gzip, bzip2, xz, lzma, lz4, Brotli 和 Zstd`，并且需要系统，安装相应的`gzip`, `bzip2`, `xz`,
 `lz4`, `brotli` 和 `zstd`二进制可执行文件。(也就是说，ripgrep 是通过终端的另一个进程，来进行解压缩，再进入(压缩)里面寻找的。)
 
 ripgrep 目前不搜索的存档格式，`*.tar.gz`之类，会跳过。
@@ -135,8 +134,6 @@ ripgrep 有两个与颜色相关的标志:
 ```
 --colors '{type}:{attribute}:{value}'
 ```
-
-
 
 - `{type}`应该是`path`，`line`，`column`要么`match`其中之一。这每一个都对应 ripgrep 在其输出中，添加颜色的四种不同类型的事物。选择要更改其颜色的类型。
 - `{attribute}`应该是`fg`，`bg`要么`style`其中之一，对应前景色，背景色或其他样式(例如是否粗体输出)。
@@ -254,10 +251,10 @@ $ RIPGREP_CONFIG_PATH=$HOME/.config/ripgrep/rc rg foo
 
 ### 为什么启用 PCRE2 正则式 时，ripgrep 会变慢？？
 
-
-
 当你使用`--pcre2`(简写用`-P`)标志，ripgrep 将使用 PCRE2 正则表达式引擎而不是默认值。两个正则表达式引擎都非常快，但 PCRE2 提供了许多其他功能，例如许多人喜欢使用的环视和反向引用（look-around 和
 backreferences）。这主要是因为 PCRE2 使用回溯实现，其中默认正则表达式引擎使用基于有限自动机的实现。前者比后者，添加了大量铃声和口哨的能力，但后者在最坏情况，亦为线性时间复杂度执行。
+
+> 译者: [环视: 在知乎找了个说明文](https://zhuanlan.zhihu.com/p/50789818)
 
 伴随着使用`-P`的 ripgrep，您可能已经注意到，它可能会变慢。导致的原因是复杂的，因为 ripgrep 实现快速搜索的优化，很复杂。
 
@@ -271,8 +268,6 @@ ripgrep 之前的任务有点简单; 它需要做的就是在文件中，搜索�
 $ rg '\n'
 the literal '"\n"' is not allowed in a regex
 ```
-
-
 
 那么这与 PCRE2 有什么关系呢？ 是这样的，ripgrep 的默认正则表达式引擎公开的 API，以一种非常容易的方式对模式进行语法分析，可以从模式中剥离`\n`(或以其他方式检测，如果剥离是不可能的，就报告错误)。PCRE2 似乎没有提供类似的 API，所以当启用 PCRE2 时，ripgrep 不执行任何剥离。这迫使 ripgrep 使用"慢"的搜索策略，单独搜索每行。
 
@@ -289,7 +284,7 @@ $ md5sum subtitles2016-sample
 e3cb796a20bbc602fbfd6bb43bda45f5   subtitles2016-sample
 ```
 
-要搜索此数据，我们将使用该模式`^\w{42}$`，它在文件中，只'命中'一个，并且没有字面量(literals)。没有字面量很重要，因为它确保 regex 引擎不会使用字面量优化，来加速搜索。换句话说，它让我们能够一致确定，regex 引擎正在执行的实际任务.
+要搜索此数据，我们将使用该模式`^\w{42}$`，它在文件中，只'命中'一个，并且没有字面量(literals)。没有字面量很重要，因为它确保 regex 引擎不会使用字面量优化，来加速搜索。换句话说，它让我们能够一致确定，regex 引擎正在执行的实际任务。
 
 现在让我们根据上面的信息来浏览几个例子。首先，让我们考虑使用 ripgrep 的默认 regex 引擎进行默认搜索，然后使用 PCRE2 进行相同的搜索:
 
@@ -437,8 +432,6 @@ sys     0m0.048s
 (特别是 Rails 插件[Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins#rails)，会建立`rails generate`的一个`rg`别名)
 
 像这样的问题可以通过以下几种方式来解决:
-
-
 
 - 如果您使用的是 OMZ Rails 插件，则通过编辑在 ZSH 配置中的`plugins`数组，禁用它。
 - 暂时绕过现有的`rg`别名，通过`command rg`,`\rg`或`'rg'`调用 ripgrep。

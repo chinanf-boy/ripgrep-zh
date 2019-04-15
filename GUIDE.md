@@ -18,7 +18,9 @@ translatable to any command line shell environment.
 * [Replacements](#replacements)
 * [Configuration file](#configuration-file)
 * [File encoding](#file-encoding)
+* [Binary data](#binary-data)
 * [Common options](#common-options)
+
 
 ### Basics
 
@@ -233,6 +235,11 @@ directory.
 Like `.gitignore`, a `.ignore` file can be placed in any directory. Its rules
 will be processed with respect to the directory it resides in, just like
 `.gitignore`.
+
+To process `.gitignore` and `.ignore` files case insensitively, use the flag
+`--ignore-file-case-insensitive`. This is especially useful on case insensitive
+file systems like those on Windows and macOS. Note though that this can come
+with a significant performance penalty, and is therefore disabled by default.
 
 For a more in depth description of how glob patterns in a `.gitignore` file
 are interpreted, please see `man gitignore`.
@@ -519,9 +526,9 @@ config file. Once the environment variable is set, open the file and just type
 in the flags you want set automatically. There are only two rules for
 describing the format of the config file:
 
-1. Every line is a shell argument, after trimming ASCII whitespace.
-2. Lines starting with `#` (optionally preceded by any amount of
-   ASCII whitespace) are ignored.
+1. Every line is a shell argument, after trimming whitespace.
+2. Lines starting with `#` (optionally preceded by any amount of whitespace)
+are ignored.
 
 In particular, there is no escaping. Each line is given to ripgrep as a single
 command line argument verbatim.
@@ -531,8 +538,9 @@ formatting peculiarities:
 
 ```
 $ cat $HOME/.ripgreprc
-# Don't let ripgrep vomit really long lines to my terminal.
+# Don't let ripgrep vomit really long lines to my terminal, and show a preview.
 --max-columns=150
+--max-column-preview
 
 # Add my 'web' type.
 --type-add
@@ -597,13 +605,14 @@ topic, but we can try to summarize its relevancy to ripgrep:
 * Files are generally just a bundle of bytes. There is no reliable way to know
   their encoding.
 * Either the encoding of the pattern must match the encoding of the files being
-  searched, or a form of transcoding must be performed converts either the
+  searched, or a form of transcoding must be performed that converts either the
   pattern or the file to the same encoding as the other.
 * ripgrep tends to work best on plain text files, and among plain text files,
   the most popular encodings likely consist of ASCII, latin1 or UTF-8. As
   a special exception, UTF-16 is prevalent in Windows environments
 
-In light of the above, here is how ripgrep behaves:
+In light of the above, here is how ripgrep behaves when `--encoding auto` is
+given, which is the default:
 
 * All input is assumed to be ASCII compatible (which means every byte that
   corresponds to an ASCII codepoint actually is an ASCII codepoint). This
@@ -619,12 +628,15 @@ In light of the above, here is how ripgrep behaves:
   they correspond to a UTF-16 BOM, then ripgrep will transcode the contents of
   the file from UTF-16 to UTF-8, and then execute the search on the transcoded
   version of the file. (This incurs a performance penalty since transcoding
-  is slower than regex searching.)
+  is slower than regex searching.) If the file contains invalid UTF-16, then
+  the Unicode replacement codepoint is substituted in place of invalid code
+  units.
 * To handle other cases, ripgrep provides a `-E/--encoding` flag, which permits
   you to specify an encoding from the
   [Encoding Standard](https://encoding.spec.whatwg.org/#concept-encoding-get).
-  ripgrep will assume *all* files searched are the encoding specified and
-  will perform a transcoding step just like in the UTF-16 case described above.
+  ripgrep will assume *all* files searched are the encoding specified (unless
+  the file has a BOM) and will perform a transcoding step just like in the
+  UTF-16 case described above.
 
 By default, ripgrep will not require its input be valid UTF-8. That is, ripgrep
 can and will search arbitrary bytes. The key here is that if you're searching
@@ -634,9 +646,26 @@ pattern won't find anything. With all that said, this mode of operation is
 important, because it lets you find ASCII or UTF-8 *within* files that are
 otherwise arbitrary bytes.
 
+As a special case, the `-E/--encoding` flag supports the value `none`, which
+will completely disable all encoding related logic, including BOM sniffing.
+When `-E/--encoding` is set to `none`, ripgrep will search the raw bytes of
+the underlying file with no transcoding step. For example, here's how you might
+search the raw UTF-16 encoding of the string `Шерлок`:
+
+```
+$ rg '(?-u)\(\x045\x04@\x04;\x04>\x04:\x04' -E none -a some-utf16-file
+```
+
+Of course, that's just an example meant to show how one can drop down into
+raw bytes. Namely, the simpler command works as you might expect automatically:
+
+```
+$ rg 'Шерлок' some-utf16-file
+```
+
 Finally, it is possible to disable ripgrep's Unicode support from within the
-pattern regular expression. For example, let's say you wanted `.` to match any
-byte rather than any Unicode codepoint. (You might want this while searching a
+regular expression. For example, let's say you wanted `.` to match any byte
+rather than any Unicode codepoint. (You might want this while searching a
 binary file, since `.` by default will not match invalid UTF-8.) You could do
 this by disabling Unicode via a regular expression flag:
 
@@ -651,6 +680,76 @@ another Unicode word character:
 ```
 $ rg '\w(?-u:\w)\w'
 ```
+
+
+### Binary data
+
+In addition to skipping hidden files and files in your `.gitignore` by default,
+ripgrep also attempts to skip binary files. ripgrep does this by default
+because binary files (like PDFs or images) are typically not things you want to
+search when searching for regex matches. Moreover, if content in a binary file
+did match, then it's possible for undesirable binary data to be printed to your
+terminal and wreak havoc.
+
+Unfortunately, unlike skipping hidden files and respecting your `.gitignore`
+rules, a file cannot as easily be classified as binary. In order to figure out
+whether a file is binary, the most effective heuristic that balances
+correctness with performance is to simply look for `NUL` bytes. At that point,
+the determination is simple: a file is considered "binary" if and only if it
+contains a `NUL` byte somewhere in its contents.
+
+The issue is that while most binary files will have a `NUL` byte toward the
+beginning of its contents, this is not necessarily true. The `NUL` byte might
+be the very last byte in a large file, but that file is still considered
+binary. While this leads to a fair amount of complexity inside ripgrep's
+implementation, it also results in some unintuitive user experiences.
+
+At a high level, ripgrep operates in three different modes with respect to
+binary files:
+
+1. The default mode is to attempt to remove binary files from a search
+   completely. This is meant to mirror how ripgrep removes hidden files and
+   files in your `.gitignore` automatically. That is, as soon as a file is
+   detected as binary, searching stops. If a match was already printed (because
+   it was detected long before a `NUL` byte), then ripgrep will print a warning
+   message indicating that the search stopped prematurely. This default mode
+   **only applies to files searched by ripgrep as a result of recursive
+   directory traversal**, which is consistent with ripgrep's other automatic
+   filtering. For example, `rg foo .file` will search `.file` even though it
+   is hidden. Similarly, `rg foo binary-file` search `binary-file` in "binary"
+   mode automatically.
+2. Binary mode is similar to the default mode, except it will not always
+   stop searching after it sees a `NUL` byte. Namely, in this mode, ripgrep
+   will continue searching a file that is known to be binary until the first
+   of two conditions is met: 1) the end of the file has been reached or 2) a
+   match is or has been seen. This means that in binary mode, if ripgrep
+   reports no matches, then there are no matches in the file. When a match does
+   occur, ripgrep prints a message similar to one it prints when in its default
+   mode indicating that the search has stopped prematurely. This mode can be
+   forcefully enabled for all files with the `--binary` flag. The purpose of
+   binary mode is to provide a way to discover matches in all files, but to
+   avoid having binary data dumped into your terminal.
+3. Text mode completely disables all binary detection and searches all files
+   as if they were text. This is useful when searching a file that is
+   predominantly text but contains a `NUL` byte, or if you are specifically
+   trying to search binary data. This mode can be enabled with the `-a/--text`
+   flag. Note that when using this mode on very large binary files, it is
+   possible for ripgrep to use a lot of memory.
+
+Unfortunately, there is one additional complexity in ripgrep that can make it
+difficult to reason about binary files. That is, the way binary detection works
+depends on the way that ripgrep searches your files. Specifically:
+
+* When ripgrep uses memory maps, then binary detection is only performed on the
+  first few kilobytes of the file in addition to every matching line.
+* When ripgrep doesn't use memory maps, then binary detection is performed on
+  all bytes searched.
+
+This means that whether a file is detected as binary or not can change based
+on the internal search strategy used by ripgrep. If you prefer to keep
+ripgrep's binary file detection consistent, then you can disable memory maps
+via the `--no-mmap` flag. (The cost will be a small performance regression when
+searching very large files on some platforms.)
 
 
 ### Common options
@@ -674,10 +773,10 @@ used options that will likely impact how you use ripgrep on a regular basis.
 * `--files`: Print the files that ripgrep *would* search, but don't actually
   search them.
 * `-a/--text`: Search binary files as if they were plain text.
-* `-z/--search-zip`: Search compressed files (gzip, bzip2, lzma, xz). This is
-  disabled by default.
+* `-z/--search-zip`: Search compressed files (gzip, bzip2, lzma, xz, lz4,
+  brotli, zstd). This is disabled by default.
 * `-C/--context`: Show the lines surrounding a match.
-* `--sort-files`: Force ripgrep to sort its output by file name. (This disables
+* `--sort path`: Force ripgrep to sort its output by file name. (This disables
   parallelism, so it might be slower.)
 * `-L/--follow`: Follow symbolic links while recursively searching.
 * `-M/--max-columns`: Limit the length of lines printed by ripgrep.

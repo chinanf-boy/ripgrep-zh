@@ -13,7 +13,7 @@
 
 ---
 
-## 校对 中
+## 更新 中
 
 <!-- doc-templite START generated -->
 <!-- repo = 'BurntSushi/ripgrep' -->
@@ -32,6 +32,10 @@
 - [x] readme
 - [ ] [指南](./GUIDE.zh.md)
 - [x] [FAQ](./FAQ.zh.md)
+- [x] [`rg -h` v0.10.0 中文](./rg-0.10.0-h.zh.md)
+
+<details>
+
 - [x] [grep-regex](./grep-regex/README.zh.md)
 - [x] [globset](./globset/README.zh.md)
 - [x] [ignore](./ignore/README.zh.md)
@@ -43,6 +47,8 @@
 - [x] [wincolor](./wincolor/README.zh.md)
 - [x] [grep-printer](./grep-printer/README.zh.md)
 - [x] [grep-matcher](./grep-matcher/README.zh.md)
+
+</details>
 
 ### 贡献
 
@@ -66,14 +72,14 @@ MIT 或 [UNLICENSE](http://unlicense.org)的双重许可。
 
 ### CHANGELOG
 
-请看[CHANGELOG](https://github.com/BurntSushi/ripgrep/blob/master/CHANGELOG.md)发布历史`en`。
+请看[CHANGELOG](https://github.com/BurntSushi/ripgrep/blob/master/CHANGELOG.md)发布历史 - `english`。
 
 ### 文档快速链接
 
 - [安装](#installation)
 - [用户指南](GUIDE.zh.md)
-- [Frequently Asked Questions](FAQ.zh.md)
-- [Regex 语法](https://docs.rs/regex/1/regex/#syntax)
+- [常见问题](FAQ.zh.md)
+- [正则式 语法](https://docs.rs/regex/1/regex/#syntax)
 - [配置文件](GUIDE.zh.md#configuration-file)
 - [Shell tab 补全](FAQ.zh.md#ripgrep-%E6%98%AF%E5%90%A6%E6%94%AF%E6%8C%81-shell-tab-%E8%A1%A5%E5%85%A8)
 - [构建](#building)
@@ -136,11 +142,13 @@ MIT 或 [UNLICENSE](http://unlicense.org)的双重许可。
 
 尽管最初不希望将每个特性都添加到 ripgrep 中，但是随着时间的推移，ripgrep 对其他文件搜索工具中的大多数特性的支持不断增加。这包括搜索跨越多行的结果，以及对 PCRE2 的 opt-in 支持，PCRE2 提供环视和反引号支持。
 
+> 译者: [环视: 在知乎找了个说明文](https://zhuanlan.zhihu.com/p/50789818)
+
 此时，不使用 ripgrep 的主要原因可能包括以下一个或多个:
 
 - 你需要一个便携的无所不在的工具。尽管 ripgrep 在 Windows、macOS 和 Linux 上工作，但它并不普遍，也不符合 POSIX 等任何标准.做这项工作最好的工具是老 grep。
 - 在这个 README 中仍然有一些您心目中所依赖的其他特性(或 bug)没有列出，这些东东在其他工具中，而不在 ripgrep 。
-- 有一个性能边缘情况，ripgrep 做得不好（而在其他工具做得好的地方）.(请提交 bug 报告!)
+- 有一个性能边缘情况，ripgrep 做得不好（而在其他工具做得好的地方）。(请提交 bug 报告!)
 - ripgrep 不可能安装在您的机器上，或者不适用于您的平台.(请提交 bug 报告!)
 
 ### 真的超越所有?
@@ -149,7 +157,7 @@ MIT 或 [UNLICENSE](http://unlicense.org)的双重许可。
 
 总之，ripgrep 很快，因为:
 
-- 它建在[Rust's regex 引擎](https://github.com/rust-lang-nursery/regex). Rust 的正则表达式引擎使用有限自动机、SIMD 和积极的文字优化来使搜索非常快。(PCRE2 支持可以与`-P/--PCRE2`参数)
+- 它建在[Rust's regex 引擎](https://github.com/rust-lang-nursery/regex)。 Rust 的正则表达式引擎使用有限自动机、SIMD 和积极的文字优化来使搜索非常快。(PCRE2 支持可以与`-P/--PCRE2`参数)
 - Rust 的 regex 库通过将 UTF-8 解码直接构建到其确定性有限自动机引擎中，从而在完全 Unicode 支持下，保持性能。
 - 它支持使用内存映射，或通过使用中间缓冲区递增地搜索进行搜索。前者对于单个文件更好，后者对于大目录更好。ripgrep 自动为您选择最佳搜索策略。
 - 将您的`.gitignore`文件的忽略模式，应用了一个[`RegexSet`](https://docs.rs/regex/1/regex/struct.RegexSet.html)。 这意味着单个文件路径，可以同时匹配多个 glob 模式。
@@ -165,7 +173,7 @@ Andy Lester，[ack](https://beyondgrep.com/)作者已发布了一个比较 ack�
 
 - 安装
 
-ripgrep 的二进制名是`rg`.
+ripgrep 的二进制名是`rg`。
 
 **[Windows，macOS 和 Linux 的 二进制文件，尽在于此](https://github.com/BurntSushi/ripgrep/releases)**，若以下有用户的平台没提到的，建议下载这些压缩中的一个。
 
@@ -322,7 +330,7 @@ $ ./target/release/rg --version
 RUSTFLAGS="-C target-cpu=native" cargo build --release --features 'simd-accel avx-accel'
 ```
 
-如果您的机器不支持 AVX 指令，则只需从功能列表中删除`avx-accel`。SIMD 也类似(它大致对应于 SSE 指令).
+如果您的机器不支持 AVX 指令，则只需从功能列表中删除`avx-accel`。SIMD 也类似(它大致对应于 SSE 指令)。
 
 在某些 ripgrep 依赖项中，`simd-accel`和`avx-accel`功能会支持 SIMD(负责计算行数和转码)。它们不需要获得 SIMD 优化搜索; 那些是自动启用。希望有一天，`simd-accel`和`avx-accel`特征变得不必要。
 
