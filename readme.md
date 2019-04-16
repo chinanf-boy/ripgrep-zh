@@ -13,7 +13,7 @@
 
 ---
 
-## 更新 中
+## 更新 ✅
 
 <!-- doc-templite START generated -->
 <!-- repo = 'BurntSushi/ripgrep' -->
@@ -30,7 +30,7 @@
 <!-- doc-templite END generated -->
 
 - [x] readme
-- [ ] [指南](./GUIDE.zh.md)
+- [x] [指南](./GUIDE.zh.md)
 - [x] [FAQ](./FAQ.zh.md)
 - [x] [`rg -h` v0.10.0 中文](./rg-0.10.0-h.zh.md)
 
