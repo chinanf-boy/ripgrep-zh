@@ -19,13 +19,12 @@
 <!-- repo = 'BurntSushi/ripgrep' -->
 <!-- commit = '45d12abbc5f576d3b10ae13dc7410b14400a8d1e' -->
 <!-- time = '2019-04-14' -->
-
-| 翻译的原文 | 与日期        | 最新更新 | 更多                       |
-| ---------- | ------------- | -------- | -------------------------- |
-| [commit]   | ⏰ 2018-12-09 | ![last]  | [中文翻译][translate-list] |
+翻译的原文 | 与日期 | 最新更新 | 更多
+---|---|---|---
+[commit] | ⏰ 2019-04-14 | ![last] | [中文翻译][translate-list]
 
 [last]: https://img.shields.io/github/last-commit/BurntSushi/ripgrep.svg
-[commit]: https://github.com/BurntSushi/ripgrep/tree/401add0a9964ff0b154171553ce6d80934461ca0
+[commit]: https://github.com/BurntSushi/ripgrep/tree/45d12abbc5f576d3b10ae13dc7410b14400a8d1e
 
 <!-- doc-templite END generated -->
 
