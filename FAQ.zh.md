@@ -47,7 +47,7 @@ ripgrep 是一个贡献者都是志愿者的项目。发布的时间表，给所
 
 ### ripgrep 是否 有 man 页面？
 
-是! 每当 ripgrep 在一个系统上编译，而`asciidoc`又存在时，那么就会从 ripgrep 的 argv 解析器生成一个 man 页。编译 ripgrep 之后,您可以从存储库的根目录中找到这样的 man 页:
+是! 每当 ripgrep 在一个系统上编译，而`asciidoc`又存在时，那么就会从 ripgrep 的 argv 解析器生成一个 man 页。编译 ripgrep 之后，您可以从存储库的根目录中找到这样的 man 页:
 
 ```
 $ find ./target -name rg.1 -print0 | xargs -0 ls -t | head -n1
@@ -56,7 +56,7 @@ $ find ./target -name rg.1 -print0 | xargs -0 ls -t | head -n1
 
 运行`man -l ./target/debug/build/ripgrep-79899d0edd4129ca/out/rg.1`将在您的普通寻呼机中显示 man 页.
 
-请注意,man 页的选项文档等同于显示的输出`rg --help`。要查看更多精简文档(每个标志一行),请运行`rg -h`。
+请注意，man 页的选项文档等同于显示的输出`rg --help`。要查看更多精简文档(每个标志一行)，请运行`rg -h`。
 
 man 页也包含所有[ripgrep 二进制版本](https://github.com/BurntSushi/ripgrep/releases)内容。
 
@@ -88,7 +88,7 @@ shell 补全也包括所有[ripgrep binary releases](https://github.com/BurntSus
 
 ### 我要如何搜索压缩文件？
 
-ripgrep 的`-z/--search-zip`标志，会自动搜索压缩文件。目前而言,仅支持`gzip, bzip2, xz, lzma, lz4, Brotli 和 Zstd`，并且需要系统，安装相应的`gzip`, `bzip2`, `xz`,
+ripgrep 的`-z/--search-zip`标志，会自动搜索压缩文件。目前而言，仅支持`gzip, bzip2, xz, lzma, lz4, Brotli 和 Zstd`，并且需要系统，安装相应的`gzip`, `bzip2`, `xz`,
 `lz4`, `brotli` 和 `zstd`二进制可执行文件。(也就是说，ripgrep 是通过终端的另一个进程，来进行解压缩，再进入(压缩)里面寻找的。)
 
 ripgrep 目前不搜索的存档格式，`*.tar.gz`之类，会跳过。
@@ -427,17 +427,17 @@ sys     0m0.048s
 
 ### 当我运行<code>rg<code>时，它为什么执行其他命令？
 
-很可能你有一个 shell 别名，甚至另一个工具也叫`rg`的干扰。运行`which rg`看看它是什么.
+很可能你有一个 shell 别名，甚至另一个工具也叫`rg`的干扰。运行`which rg`看看它是什么。
 
 (特别是 Rails 插件[Oh My Zsh](https://github.com/robbyrussell/oh-my-zsh/wiki/Plugins#rails)，会建立`rails generate`的一个`rg`别名)
 
 像这样的问题可以通过以下几种方式来解决:
 
 - 如果您使用的是 OMZ Rails 插件，则通过编辑在 ZSH 配置中的`plugins`数组，禁用它。
-- 暂时绕过现有的`rg`别名，通过`command rg`,`\rg`或`'rg'`调用 ripgrep。
+- 暂时绕过现有的`rg`别名，通过`command rg`，`\rg`或`'rg'`调用 ripgrep。
 - 暂时绕过现有别名或另一个`rg`工具，通过调用 ripgrep 的完整路径(例如`/usr/bin/rg`或`/usr/local/bin/rg`)
 - 永久禁用现有的`rg`别名，通过添加`unalias rg`到 shell 配置文件的底部(例如，`.bash_profile`或`.zshrc`)
-- 通过在 shell 配置文件的底部添加如下行，让 ripgrep 与其他工具/别名不冲突:`alias ripgrep='command rg'`.
+- 通过在 shell 配置文件的底部添加如下行，让 ripgrep 与其他工具/别名不冲突:`alias ripgrep='command rg'`。
 
 ### 如何在 Windows 上 为 ripgrep 创建别名？
 
@@ -468,9 +468,9 @@ PowerShell 特殊变量:
 
 ### 如何创建 PowerShell 配置文件？
 
-要在启动时，定制 powershell，必须创建一个特殊的 powershell 脚本.为了找到它的位置，见[Microsoft's 文档](<https://technet.microsoft.com/en-us/library/bb613488(v=vs.85).aspx>)的`$profile`类型，了解更多细节.
+要在启动时，定制 powershell，必须创建一个特殊的 powershell 脚本。为了找到它的位置，见[Microsoft's 文档](<https://technet.microsoft.com/en-us/library/bb613488(v=vs.85).aspx>)的`$profile`类型，了解更多细节。
 
-这个文件中的任何 PowerShell 代码，在控制台的开始时被执行。这样,您可以在开始时，创建自己的别名。
+这个文件中的任何 PowerShell 代码，在控制台的开始时被执行。这样，您可以在开始时，创建自己的别名。
 
 ### Windows 如何将 非 ASCII 内容传输到 ripgrep？
 
@@ -495,7 +495,7 @@ SED 是一种可以在磁盘上修改文件的工具。SED 可以使用文件名
 rg foo --files-with-matches
 ```
 
-此命令的输出是，包含`foo`模式匹配的文件名的列表.
+此命令的输出是，包含`foo`模式匹配的文件名的列表。
 
 这个列表可以用管道输入`xargs`，它将文件名从标准输入中，分离为 xargs 之后的命令的参数。您可以使用下面的组合，将文件名列表导入 SED 中进行替换。例如:
 
@@ -503,7 +503,7 @@ rg foo --files-with-matches
 rg foo --files-with-matches | xargs sed -i 's/foo/bar/g'
 ```
 
-在 ripgrep 找到 foo 模式的文件中，用"bar"替换"foo"的所有实例.SED 指示的这个`-i`标记，是您正要编辑的文件，以及`s/foo/bar/g`说明，你在执行**替换**，`foo`到`bar`，而且你正在做的这个替换，是**全面性的**(替换，文件中的每个匹配)。
+在 ripgrep 找到 foo 模式的文件中，用"bar"替换"foo"的所有实例。SED 指示的这个`-i`标记，是您正要编辑的文件，以及`s/foo/bar/g`说明，你在执行**替换**，`foo`到`bar`，而且你正在做的这个替换，是**全面性的**(替换，文件中的每个匹配)。
 
 注意:上面的命令是假定，您正在使用 GNU sed。如果您使用的是 BSD sed(macOS 和 FreeBSD 上的默认值)，那么必须修改上面的命令如下:
 
@@ -511,7 +511,7 @@ rg foo --files-with-matches | xargs sed -i 's/foo/bar/g'
 rg foo --files-with-matches | xargs sed -i '' 's/foo/bar/g'
 ```
 
-BSD sed 中这个`-i`的标志要求提供一个文件扩展名,以便对所有修改后的文件进行备份。指定空字符串可以防止文件备份.
+BSD sed 中这个`-i`的标志要求提供一个文件扩展名，以便对所有修改后的文件进行备份。指定空字符串可以防止文件备份.
 
 最后，如果任何文件路径都包含空格，那么可能需要使用 NUL 终止符，来分隔文件路径。这需要告诉 ripgrep 在每个路径之间，输出 NUL 字节，并告诉 xargs 读取，由 NUL 字节分隔的路径:
 
@@ -519,7 +519,7 @@ BSD sed 中这个`-i`的标志要求提供一个文件扩展名,以便对所有�
 rg foo --files-with-matches -0 | xargs -0 sed -i 's/foo/bar/g'
 ```
 
-要了解有关 sed 的更多信息,请参阅[这里](https://www.gnu.org/software/sed/manual/sed.html)的 sed 手册.
+要了解有关 sed 的更多信息，请参阅[这里](https://www.gnu.org/software/sed/manual/sed.html)的 sed 手册。
 
 另外，脸谱网有一个工具叫做[fastmod](https://github.com/facebookincubator/fastmod)，它使用与 ripgrep 相同的一些库，并且可以提供更符合人体工程学的搜索和替换体验。
 
@@ -553,7 +553,7 @@ ripgrep 是双重授权的原因是两个方面的:
 
 以下是一些你可能会遇到的情况，*不*想使用 ripgrep。同样适用于上一节的警告。
 
-- 您是否编写了，用于在各种环境中，工作的便携式 shell 脚本？很好，用 ripgrep 可能不是一个好主意!ripgrep 离 grep 还差得远，所以如果您确实使用 ripgrep，那么您可能需要，比 grep ，更忙于安装过程.
+- 您是否编写了，用于在各种环境中，工作的便携式 shell 脚本？很好，用 ripgrep 可能不是一个好主意!ripgrep 离 grep 还差得远，所以如果您确实使用 ripgrep，那么您可能需要，比 grep ，更忙于安装过程。
 - 您关心 POSIX 兼容性吗？如果是这样，那么就不能使用 ripgrep，因为它从来没有，也永远不会是 POSIX 兼容的。
 - 你讨厌尝试自以为是的工具吗？如果是这样的话，ripgrep 完全是自以为是的，所以你可能更愿意坚持 grep。
 - 你依赖 grep ，但 ripgrep 却没有的特别特性？如果是，文件错误报告，也许 ripgrep 可以做到这一点! 如果真没有，那么，只需使用 grep。
