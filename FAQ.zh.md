@@ -3,6 +3,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
 
+
 - [ripgrep 支持 配置文件吗？](#ripgrep-%E6%94%AF%E6%8C%81-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%E5%90%97)
 - [ripgrep 有啥变化？](#ripgrep-%E6%9C%89%E5%95%A5%E5%8F%98%E5%8C%96)
 - [下一次发布，是什么时候？](#%E4%B8%8B%E4%B8%80%E6%AC%A1%E5%8F%91%E5%B8%83%E6%98%AF%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99)
@@ -13,18 +14,18 @@
 - [我要如何搜索压缩文件？](#%E6%88%91%E8%A6%81%E5%A6%82%E4%BD%95%E6%90%9C%E7%B4%A2%E5%8E%8B%E7%BC%A9%E6%96%87%E4%BB%B6)
 - [我要如何搜索 多行内容？](#%E6%88%91%E8%A6%81%E5%A6%82%E4%BD%95%E6%90%9C%E7%B4%A2-%E5%A4%9A%E8%A1%8C%E5%86%85%E5%AE%B9)
 - [如何使用 lookaround 和/或 backreferences？](#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8-lookaround-%E5%92%8C%E6%88%96-backreferences)
-- [怎么配置 ripgrep's 颜色？](#%E6%80%8E%E4%B9%88%E9%85%8D%E7%BD%AE-ripgreps-%E9%A2%9C%E8%89%B2)
+- [怎么配置 ripgrep 的 颜色？](#%E6%80%8E%E4%B9%88%E9%85%8D%E7%BD%AE-ripgrep-%E7%9A%84-%E9%A2%9C%E8%89%B2)
 - [如何在 Windows 上启用真彩色？](#%E5%A6%82%E4%BD%95%E5%9C%A8-windows-%E4%B8%8A%E5%90%AF%E7%94%A8%E7%9C%9F%E5%BD%A9%E8%89%B2)
 - [当我杀死它时，如何防止 ripgrep 弄乱颜色？](#%E5%BD%93%E6%88%91%E6%9D%80%E6%AD%BB%E5%AE%83%E6%97%B6%E5%A6%82%E4%BD%95%E9%98%B2%E6%AD%A2-ripgrep-%E5%BC%84%E4%B9%B1%E9%A2%9C%E8%89%B2)
-- [我该怎么绕过 Regex 的尺寸限制呢？](#%E6%88%91%E8%AF%A5%E6%80%8E%E4%B9%88%E7%BB%95%E8%BF%87-regex-%E7%9A%84%E5%B0%BA%E5%AF%B8%E9%99%90%E5%88%B6%E5%91%A2)
+- [我该怎么绕过 正则式 的大小限制呢？](#%E6%88%91%E8%AF%A5%E6%80%8E%E4%B9%88%E7%BB%95%E8%BF%87-%E6%AD%A3%E5%88%99%E5%BC%8F-%E7%9A%84%E5%A4%A7%E5%B0%8F%E9%99%90%E5%88%B6%E5%91%A2)
 - [如何让 <code>-f/--file</code> 标志更快？](#%E5%A6%82%E4%BD%95%E8%AE%A9-code-f--filecode-%E6%A0%87%E5%BF%97%E6%9B%B4%E5%BF%AB)
 - [如何使输出看起来像 Silver Searcher 的输出？](#%E5%A6%82%E4%BD%95%E4%BD%BF%E8%BE%93%E5%87%BA%E7%9C%8B%E8%B5%B7%E6%9D%A5%E5%83%8F-silver-searcher-%E7%9A%84%E8%BE%93%E5%87%BA)
 - [为什么启用 PCRE2 正则式 时，ripgrep 会变慢？？](#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%90%AF%E7%94%A8-pcre2-%E6%AD%A3%E5%88%99%E5%BC%8F-%E6%97%B6ripgrep-%E4%BC%9A%E5%8F%98%E6%85%A2)
-- [当我运行<code>rg<code>时，它为什么执行其他命令？](#%E5%BD%93%E6%88%91%E8%BF%90%E8%A1%8Ccodergcode%E6%97%B6%E5%AE%83%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%A7%E8%A1%8C%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4)
+- [当我运行<code>rg</code>时，它为什么执行其他命令？](#%E5%BD%93%E6%88%91%E8%BF%90%E8%A1%8Ccodergcode%E6%97%B6%E5%AE%83%E4%B8%BA%E4%BB%80%E4%B9%88%E6%89%A7%E8%A1%8C%E5%85%B6%E4%BB%96%E5%91%BD%E4%BB%A4)
 - [如何在 Windows 上 为 ripgrep 创建别名？](#%E5%A6%82%E4%BD%95%E5%9C%A8-windows-%E4%B8%8A-%E4%B8%BA-ripgrep-%E5%88%9B%E5%BB%BA%E5%88%AB%E5%90%8D)
 - [如何创建 PowerShell 配置文件？](#%E5%A6%82%E4%BD%95%E5%88%9B%E5%BB%BA-powershell-%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6)
-- [如何将 非 ASCII 内容传输到 Windows 上的 ripgrep？](#%E5%A6%82%E4%BD%95%E5%B0%86-%E9%9D%9E-ascii-%E5%86%85%E5%AE%B9%E4%BC%A0%E8%BE%93%E5%88%B0-windows-%E4%B8%8A%E7%9A%84-ripgrep)
-- [如何搜索并替换为 ripgrep？](#%E5%A6%82%E4%BD%95%E6%90%9C%E7%B4%A2%E5%B9%B6%E6%9B%BF%E6%8D%A2%E4%B8%BA-ripgrep)
+- [Windows 如何将 非 ASCII 内容传输到 ripgrep？](#windows-%E5%A6%82%E4%BD%95%E5%B0%86-%E9%9D%9E-ascii-%E5%86%85%E5%AE%B9%E4%BC%A0%E8%BE%93%E5%88%B0-ripgrep)
+- [如何用 ripgrep 搜索并替换？](#%E5%A6%82%E4%BD%95%E7%94%A8-ripgrep-%E6%90%9C%E7%B4%A2%E5%B9%B6%E6%9B%BF%E6%8D%A2)
 - [Ripgrep 是如何获得许可的？](#ripgrep-%E6%98%AF%E5%A6%82%E4%BD%95%E8%8E%B7%E5%BE%97%E8%AE%B8%E5%8F%AF%E7%9A%84)
 - [Ripgrep 能代替 grep 吗？](#ripgrep-%E8%83%BD%E4%BB%A3%E6%9B%BF-grep-%E5%90%97)
 - [“ripgrep”中的“rip”是什么意思？](#ripgrep%E4%B8%AD%E7%9A%84rip%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D)
@@ -425,7 +426,7 @@ sys     0m0.048s
 
 警告清空器: 此作者不是 PCRE2 专家，因此可能有一些 API ，有作者错过的性能提高。类似地，可能存在更适合搜索工具，如同 PCRE2 工作方式的替代设计。
 
-### 当我运行<code>rg<code>时，它为什么执行其他命令？
+### 当我运行<code>rg</code>时，它为什么执行其他命令？
 
 很可能你有一个 shell 别名，甚至另一个工具也叫`rg`的干扰。运行`which rg`看看它是什么。
 
