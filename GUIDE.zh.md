@@ -139,7 +139,7 @@ src/printer.rs
 小心这一标志! 二进制文件可以向终端发送控制字符，这可能会导致奇怪的行为。
 **4.** ripgrep 可以用`--follow`遵循 symlinks(短的`-L`)。
 
-作为一种特殊的方便方式，ripgrep 还提供了一个`--unrestricted`(短的`-u`)标志。重复使用此标志将导致 ripgrep 禁用其越来越多的过滤。也就是说，`-u`将禁用`.gitignore`处理，`-uu`将搜索隐藏的文件和目录`-uuu`将搜索二进制文件。当您使用 ripgrep ，但不确定它的过滤是否对您隐藏了结果时，这是非常有用的。缝上一对`-u`标志是一种快速的发现方法。(如果你使用`--debug`，仍然困惑，还是没有帮助，[提出一个 issue](https://github.com/BurntSushi/ripgrep/issues/new))
+作为一种特殊的方便方式，ripgrep 还提供了一个`--unrestricted`(短的`-u`)标志。重复使用此标志将导致 ripgrep 禁用其越来越多的过滤。也就是说，`-u`将禁用`.gitignore`处理，`-uu`将搜索隐藏的文件和目录`-uuu`将搜索二进制文件。当您使用 ripgrep ，但不确定它的过滤是否对您隐藏了结果时，这是非常有用的。带上一对`-u`标志是一种快速的发现方法。(如果你使用`--debug`，仍然困惑，还是没有帮助，[提出一个 issue](https://github.com/BurntSushi/ripgrep/issues/new))
 
 ripgrep 的`.gitignore`处理实际上，有点超出`.gitignore`文件。ripgrip 还将遵循以下的特定规则。一个是`$GIT_DIR/info/exclude`，以及您的任何全局忽略规则`core.excludesFile`(在类 UNIX 系统上,通常位于`$XDG_CONFIG_HOME/git/ignore`)。
 
